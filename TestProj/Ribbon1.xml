@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
+  <ribbon>
+	  <tabs>
+		  <tab idMso="TabSlideShow">
+			  <group id="myGroup" label="Video Description"
+						   visible="true" insertBeforeMso="GroupSaveRecording" >
+				  <button id="myGetVideoDescription" label="Get time codes" enabled="true"
+								  onAction="OnCustomButtonClick" getImage="GetVideoportalImage"
+								  size="large" />
+			  </group>
+		  </tab>
+	  </tabs>
+  </ribbon>
+</customUI>

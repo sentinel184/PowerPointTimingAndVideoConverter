@@ -1,0 +1,4 @@
+Slide 1: 2,475 seconds
+Slide 2: 4,041 seconds
+Slide 3: 1,978 seconds
+Total duration: 8,493999 seconds

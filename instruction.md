@@ -8,7 +8,7 @@ And also you need to download ffmpeg.exe from the link https://www.videohelp.com
 
 1)unpack the archive, 
 
-2)find a folder bin,
+2)find a folder "bin",
 
 3)extract the file ffmpeg.exe to a convenient location,
 

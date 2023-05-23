@@ -10,6 +10,16 @@
 								  size="large" />
 			  </group>
 		  </tab>
+
+		  <tab idMso="TabSlideShow">
+			  <group id="myGroup2" label="Video Description"
+						   visible="true" insertBeforeMso="GroupSaveRecording" >
+				  <button id="myGetExportSubTitlesFromAudioFile" label="Get Sub Titles" enabled="true"
+								  onAction="OnButtonClickExportSubTitlesFromAudioFile" getImage=""
+								  size="large" />
+			  </group>
+		  </tab>
+		  
 	  </tabs>
   </ribbon>
 </customUI>

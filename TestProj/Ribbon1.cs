@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Microsoft.Office.Core;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
+using TestProj;
 
 
 // TODO:  Выполните эти шаги, чтобы активировать элемент XML ленты:
@@ -57,6 +58,12 @@ namespace TestProj
         {
 
             this.ribbon = ribbonUI;
+        }
+        public void OnButtonClickExportSubTitlesFromAudioFile(Office.IRibbonControl control)
+        {
+            SubTitlesExtractor extractor= new SubTitlesExtractor();
+            
+            
         }
         public void OnCustomButtonClick(Office.IRibbonControl control)
         {

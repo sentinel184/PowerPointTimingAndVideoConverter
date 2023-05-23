@@ -127,7 +127,7 @@ namespace TestProj
                 }
             }
         }
-        public static async void ExportSubTitlesFromAudioFile(Model model, string audioPath)
+        public static async void ExportSubTitlesFromAudioFile(Model model, string audioPath,string txtFilePath)
         {
             //Model model2 = new Model("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\model");
             VoskRecognizer rec = new VoskRecognizer(model, 16000);
@@ -152,7 +152,7 @@ namespace TestProj
             }
             // Console.WriteLine(rec.FinalResult());
             // запись в файл
-            string path = "SubTitles.txt";
+            //string path = "SubTitles.txt";
             string text = rec.FinalResult();
             int index = text.IndexOf("text");
             string cutingText = "";
@@ -160,7 +160,7 @@ namespace TestProj
             {
                 cutingText += string.Join("", text[i]);
             }
-            using (FileStream fstream = new FileStream(path, FileMode.OpenOrCreate))
+            using (FileStream fstream = new FileStream(txtFilePath, FileMode.OpenOrCreate))
             {
                 byte[] buffer = Encoding.Default.GetBytes(cutingText);
                 await fstream.WriteAsync(buffer, 0, buffer.Length);

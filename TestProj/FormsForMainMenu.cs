@@ -10,10 +10,12 @@ namespace TestProj
 {
     internal class FormsForMainMenu
     {
-        public string GetVideoPath()
+        public List<string> GetVideoPath()
         {
             string filePath = "";
             string txtFilePath = "";
+            var Pahtslist = new List<string>();
+
             Form inputForm = new Form();
             inputForm.Text = "Enter File Path";
             inputForm.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -51,8 +53,12 @@ namespace TestProj
                 MessageBox.Show("File path: " + filePath);
                 MessageBox.Show("File Name: " + txtFileTextBox);
             }
+            //Pahtslist[0] = filePath;
+           // Pahtslist[1] = txtFilePath;
+            Pahtslist.Insert(0, filePath);
+            Pahtslist.Insert(1,txtFilePath);
             File.WriteAllText("E:\\Visual_studio_files_and_Visual_trash\\TestProj\\TestProj\\testing.txt", filePath);
-            return filePath;
+            return Pahtslist;
         }
     }
 }

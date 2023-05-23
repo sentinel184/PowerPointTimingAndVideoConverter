@@ -66,9 +66,10 @@ namespace TestProj
             SubTitlesExtractor extractor = new SubTitlesExtractor();
             FormsForMainMenu newForm= new FormsForMainMenu();
             Model model = new Model("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\model");
-
-            SubTitlesExtractor.FullConvertForExportSubTitles(newForm.GetVideoPath(),"Output16K.wav");
-            SubTitlesExtractor.ExportSubTitlesFromAudioFile(model, "MonoAudioWithDicridisation16kInWavFormat.wav");
+            var TwoPaths = new List<string>();
+            TwoPaths.AddRange(newForm.GetVideoPath());
+            SubTitlesExtractor.FullConvertForExportSubTitles(TwoPaths[0],"Output16K.wav");
+            SubTitlesExtractor.ExportSubTitlesFromAudioFile(model, "MonoAudioWithDicridisation16kInWavFormat.wav", TwoPaths[1]);
 
             MessageBox.Show("Видео успешно обработано");
         }

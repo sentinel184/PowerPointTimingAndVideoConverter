@@ -127,12 +127,14 @@ namespace TestProj
                 }
             }
         }
-        public static async void ExportSubTitlesFromAudioFile(Model model, string audioPath,string txtFilePath)
+        
+        public static List<string> ExportSubTitlesFromAudioFile(Model model, string audioPath)
         {
             //Model model2 = new Model("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\model");
             VoskRecognizer rec = new VoskRecognizer(model, 16000);
             rec.SetMaxAlternatives(0);
             rec.SetWords(true);
+            var FullText = new List<string>();
 
             using (Stream source = File.OpenRead(audioPath))
             {
@@ -142,18 +144,27 @@ namespace TestProj
                 {
                     if (rec.AcceptWaveform(buffer, bytesRead))
                     {
-                        //Console.WriteLine(rec.Result());
+                        string text = rec.Result();//Sentense
+                        int index = text.IndexOf("text") + 7;
+                        string cutingText = "";
+                        for (int i = index; i < text.Length - 2; i++)
+                        {
+                            cutingText += string.Join("", text[i]);
+                        }
+                        FullText.Add(cutingText);
+                        Console.WriteLine(cutingText);
                     }
                     else
                     {
                         // Console.WriteLine(rec.PartialResult());
                     }
                 }
+
             }
             // Console.WriteLine(rec.FinalResult());
             // запись в файл
             //string path = "SubTitles.txt";
-            string text = rec.FinalResult();
+            /*string text = rec.FinalResult();
             int index = text.IndexOf("text");
             string cutingText = "";
             for (int i = index; i < text.Length; i++)
@@ -165,8 +176,9 @@ namespace TestProj
                 byte[] buffer = Encoding.Default.GetBytes(cutingText);
                 await fstream.WriteAsync(buffer, 0, buffer.Length);
                 Console.WriteLine("Текст записан в файл");
-            }
+            }*/
             DeleteUselessFile(audioPath);
+            return FullText;
         }
         public static void DeleteUselessFile(string filePathName)
         {

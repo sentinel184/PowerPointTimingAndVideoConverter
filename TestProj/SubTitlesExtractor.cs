@@ -11,9 +11,10 @@ using Vosk;
 using TestProj;
 using Microsoft.Office.Tools.Ribbon;
 
+
 namespace TestProj
 {
-    public class SubTitlesExtractor
+    internal class SubTitlesExtractor
     {
         public static void ExtractAudio(string inputFilePath, string outputFilePath)
         {
@@ -193,20 +194,6 @@ namespace TestProj
 
 
 
-        public static void Main()
-        {
-            // You can set to -1 to disable logging messages
-            //Vosk.Vosk.SetLogLevel(0);
-            Model model = new Model("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\model");
-            //DemoBytes(model);
-            //DemoFloats(model);
-            //DemoSpeaker(model);
-            //ConverMp4toMp3("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\video1.mp4", "videosound.mp3");
-            //ConverStereoToMono("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\bin\\Debug\\net6.0\\videosound.mp3","Mono.mp3");
-            //ConvertToWav("Mono2.mp3", "OutputMono.Wav");
-            //ConverDiscriditationTo16K("Mono.mp3", "Mono2.mp3");
-            FullConvertForExportSubTitles("video2.mp4", "MonoAudioWithDicridisation16kInWavFormat.wav");
-            ExportSubTitlesFromAudioFile(model, "MonoAudioWithDicridisation16kInWavFormat.wav");
-        }
+        
     }
 }

@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using Microsoft.Office.Core;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
+using TestProj;
+using Vosk;
 
 
 // TODO:  Выполните эти шаги, чтобы активировать элемент XML ленты:
@@ -57,6 +59,19 @@ namespace TestProj
         {
 
             this.ribbon = ribbonUI;
+        }
+
+        public void OnButtonClickExportSubTitlesFromVideoFile(Office.IRibbonControl control)
+        {
+            SubTitlesExtractor extractor = new SubTitlesExtractor();
+            FormsForMainMenu newForm= new FormsForMainMenu();
+            Model model = new Model("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\model");
+            var TwoPaths = new List<string>();
+            TwoPaths.AddRange(newForm.GetVideoPath());
+            SubTitlesExtractor.FullConvertForExportSubTitles(TwoPaths[0],"Output16K.wav");
+            SubTitlesExtractor.ExportSubTitlesFromAudioFile(model, "MonoAudioWithDicridisation16kInWavFormat.wav", TwoPaths[1]);
+
+            MessageBox.Show("Видео успешно обработано");
         }
         public void OnCustomButtonClick(Office.IRibbonControl control)
         {

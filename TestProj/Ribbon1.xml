@@ -20,14 +20,6 @@
 			  </group>
 		  </tab>
 
-		  <tab idMso="TabSlideShow">
-			  <group id="myGroup22" label="Test"
-						   visible="true" insertBeforeMso="GroupSaveRecording" >
-				  <button id="myGetExportSubTitlesFromAudioFile2" label="Test" enabled="true"
-								  onAction="But" getImage="Image"
-								  size="large" />
-			  </group>
-		  </tab>
 
 		  
 	  </tabs>

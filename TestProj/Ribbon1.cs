@@ -60,27 +60,10 @@ namespace TestProj
 
             this.ribbon = ribbonUI;
         }
-        public void But(Office.IRibbonControl control)
-        {
-            Model model = new Model("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\model");
-            var Subtitles = new List<string>();
-            // Get a reference to the active presentation
-            Presentation presentation = Globals.ThisAddIn.Application.ActivePresentation;
-            Subtitles = SubTitlesExtractor.ExportSubTitlesFromAudioFile(model, "MonoAudioWithDicridisation16kInWavFormat.wav");
-            // Loop through each slide in the presentation
-            for (int i = 1; i <= presentation.Slides.Count; i++)
-            {
-                // Get a reference to the current slide
-                Slide slide = presentation.Slides[i];
-                slide.Comments.Add(10, 10, "System", "", Subtitles[i]);
-                // Add a comment to the slide with the slide number
-                // slide.Comments.Add(slide.SlideNumber.ToString());
-                //slide.Comments.Add2()
-            }
-        }
 
         public void OnButtonClickExportSubTitlesFromVideoFile(Office.IRibbonControl control)
         {
+            //TODO
             SubTitlesExtractor extractor = new SubTitlesExtractor();
             FormsForMainMenu newForm= new FormsForMainMenu();
             var Subtitles = new List<string>();
@@ -99,11 +82,8 @@ namespace TestProj
                 // Get a reference to the current slide
                 Slide slide = presentation.Slides[i];
                 slide.Comments.Add(10, 10, "System", "", Subtitles[i-1]);
-                // Add a comment to the slide with the slide number
-                // slide.Comments.Add(slide.SlideNumber.ToString());
-                //slide.Comments.Add2()
+
             }
-            //SubTitlesExtractor.ExportSubTitlesFromAudioFile(model, "MonoAudioWithDicridisation16kInWavFormat.wav");
 
             MessageBox.Show("Видео успешно обработано");
         }

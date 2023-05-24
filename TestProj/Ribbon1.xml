@@ -18,6 +18,14 @@
 								  onAction="OnButtonClickExportSubTitlesFromVideoFile" getImage="Image"
 								  size="large" />
 			  </group>
+		  </tab>	
+		  <tab idMso="TabSlideShow">
+			  <group id="myGroup3" label="Video Description"
+						   visible="true" insertBeforeMso="GroupSaveRecording" >
+				  <button id="my" label="Convert Presentation" enabled="true"
+								  onAction="ConvertPresentationToVideo" getImage="Image"
+								  size="large" />
+			  </group>
 		  </tab>
 
 

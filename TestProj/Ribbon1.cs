@@ -11,26 +11,7 @@ using Office = Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
 using TestProj;
 using Vosk;
-
-
-// TODO:  Выполните эти шаги, чтобы активировать элемент XML ленты:
-
-// 1: Скопируйте следующий блок кода в класс ThisAddin, ThisWorkbook или ThisDocument.
-
-//  protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
-//  {
-//      return new Ribbon1();
-//  }
-
-// 2. Создайте методы обратного вызова в области "Обратные вызовы ленты" этого класса, чтобы обрабатывать действия
-//    пользователя, например нажатие кнопки. Примечание: если эта лента экспортирована из конструктора ленты,
-//    переместите свой код из обработчиков событий в методы обратного вызова и модифицируйте этот код, чтобы работать с
-//    моделью программирования расширения ленты (RibbonX).
-
-// 3. Назначьте атрибуты тегам элементов управления в XML-файле ленты, чтобы идентифицировать соответствующие методы обратного вызова в своем коде.  
-
-// Дополнительные сведения можно найти в XML-документации для ленты в справке набора средств Visual Studio для Office.
-
+using Application = Microsoft.Office.Interop.PowerPoint.Application;
 
 namespace TestProj
 {
@@ -60,10 +41,22 @@ namespace TestProj
 
             this.ribbon = ribbonUI;
         }
+        public void ConvertPresentationToVideo(Office.IRibbonControl control)
+        {
+            var pptPresentation = Globals.ThisAddIn.Application.ActivePresentation;
+            // открываем презентацию
 
+            // вызываем встроенную функцию конвертации презентации в видео
+            pptPresentation.CreateVideo("E:\\Visual_studio_files_and_Visual_trash\\TestProj\\TestProj\\ConvertedVideo.mp4");
+
+            // сохраняем изменения
+            pptPresentation.Save();
+
+        }
         public void OnButtonClickExportSubTitlesFromVideoFile(Office.IRibbonControl control)
         {
             //TODO
+            MessageBox.Show("Немного подождите, генерируются субтитры");
             SubTitlesExtractor extractor = new SubTitlesExtractor();
             FormsForMainMenu newForm= new FormsForMainMenu();
             var Subtitles = new List<string>();
@@ -71,8 +64,8 @@ namespace TestProj
             Model model = new Model("E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\model");
 
             var TwoPaths = new List<string>();
-            TwoPaths.AddRange(newForm.GetVideoPath());
-            SubTitlesExtractor.FullConvertForExportSubTitles(TwoPaths[0], "Output16K.wav");
+           // TwoPaths.AddRange(newForm.GetVideoPath());
+            SubTitlesExtractor.FullConvertForExportSubTitles("E:\\Visual_studio_files_and_Visual_trash\\TestProj\\TestProj\\ConvertedVideo.mp4", "Output16K.wav");
             // Get a reference to the active presentation
             Presentation presentation = Globals.ThisAddIn.Application.ActivePresentation;
             Subtitles = SubTitlesExtractor.ExportSubTitlesFromAudioFile(model, "MonoAudioWithDicridisation16kInWavFormat.wav");
@@ -81,7 +74,7 @@ namespace TestProj
             {
                 // Get a reference to the current slide
                 Slide slide = presentation.Slides[i];
-                slide.Comments.Add(10, 10, "System", "", Subtitles[i-1]);
+                slide.Comments.Add(10, 10, "System", "", Subtitles[i]);
 
             }
 

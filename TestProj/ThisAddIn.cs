@@ -5,11 +5,13 @@ using System.Text;
 using System.Xml.Linq;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using Office = Microsoft.Office.Core;
+using Microsoft.Office.Interop.PowerPoint;
 
 namespace TestProj
 {
     public partial class ThisAddIn
     {
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
 

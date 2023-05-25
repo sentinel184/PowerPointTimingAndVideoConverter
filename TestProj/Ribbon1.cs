@@ -41,6 +41,10 @@ namespace TestProj
 
             this.ribbon = ribbonUI;
         }
+        public void Go(Office.IRibbonControl control)
+        {
+            GetSubsFromAnySlide.GetSubs(); 
+        }
         public void ConvertPresentationToVideo(Office.IRibbonControl control)
         {
             var pptPresentation = Globals.ThisAddIn.Application.ActivePresentation;
@@ -82,25 +86,19 @@ namespace TestProj
         }
         public void OnCustomButtonClick(Office.IRibbonControl control)
         {
+            var myForm = new Form();
             //TODO
             try
             {
                 // Get the active presentation.
                 var presentation = Globals.ThisAddIn.Application.ActivePresentation;
-
-                // Check if the presentation is in slide show view.
-                if (presentation.SlideShowWindow == null)
-                {
-                    MessageBox.Show("The presentation is not currently in slide show view.");
-                    return;
-                }
-
+                var durationForForm = new List<string>();
                 // Get the total duration of the presentation from the application settings.
                 var totalDuration = Properties.Settings.Default.SlideShowDuration;
 
                 // Create a new text file to store the slide times.
-                var filePath = Path.Combine("E:\\Visual_studio_files_and_Visual_trash\\TestProj\\TestProj", "slide_times.txt");
-                var file = File.CreateText(filePath);
+                //var filePath = Path.Combine("E:\\Visual_studio_files_and_Visual_trash\\TestProj\\TestProj", "slide_times.txt");
+                //var file = File.CreateText(filePath);
 
                 // Loop through all the slides in the presentation and record their start and end times.
                 for (int i = 1; i <= presentation.Slides.Count; i++)
@@ -109,7 +107,8 @@ namespace TestProj
                     var slideDuration = slide.SlideShowTransition.AdvanceTime;
                    
 
-                    file.WriteLine($"Slide {i}: {slideDuration} seconds");
+                   // file.WriteLine($"Slide {i}: {slideDuration} seconds");
+                    durationForForm.Add( $" Slide {i}: {slideDuration.ToString()} seconds" );
 
 
                     // If this is not the last slide, subtract the slide duration from the total duration.
@@ -119,13 +118,18 @@ namespace TestProj
                 }
 
                 // Add the total duration to the end of the file.
-                file.WriteLine($"Total duration: {totalDuration} seconds");
+               // file.WriteLine($"Total duration: {totalDuration} seconds");
+                durationForForm.Add($" Total duration: {totalDuration.ToString()} seconds");
+                ListBox listBox = new ListBox();
+                listBox.DataSource = durationForForm;
+                myForm.Controls.Add(listBox);
+                myForm.ShowDialog();
 
                 // Close the file.
-                file.Close();
+               // file.Close();
 
                 // Show a message box to indicate that the slide times have been recorded.
-                MessageBox.Show("Slide times have been recorded and saved to " + filePath);
+               // MessageBox.Show("Slide times have been recorded and saved to " + filePath);
             }
             catch (Exception ex)
             {

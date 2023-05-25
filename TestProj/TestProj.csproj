@@ -192,6 +192,7 @@
   -->
   <ItemGroup>
     <Compile Include="FormsForMainMenu.cs" />
+    <Compile Include="GetSubsFromAnySlide.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

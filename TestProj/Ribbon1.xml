@@ -5,7 +5,7 @@
 		  <tab idMso="TabSlideShow">
 			  <group id="myGroup" label="Video Description"
 						   visible="true" insertBeforeMso="GroupSaveRecording" >
-				  <button id="myGetVideoDescription" label="Get time codes" enabled="true"
+				  <button id="myGetVideoDescription" label="Получить Тайм-коды" enabled="true"
 								  onAction="OnCustomButtonClick" getImage="GetVideoportalImage"
 								  size="large" />
 			  </group>
@@ -14,7 +14,7 @@
 		  <tab idMso="TabSlideShow">
 			  <group id="myGroup2" label="Video Description"
 						   visible="true" insertBeforeMso="GroupSaveRecording" >
-				  <button id="myGetExportSubTitlesFromAudioFile" label="Get Sub Titles" enabled="true"
+				  <button id="myGetExportSubTitlesFromAudioFile" label="Перевести голос в комментарии" enabled="true"
 								  onAction="OnButtonClickExportSubTitlesFromVideoFile" getImage="Image"
 								  size="large" />
 			  </group>
@@ -22,7 +22,7 @@
 		  <tab idMso="TabSlideShow">
 			  <group id="myGroup3" label="Video Description"
 						   visible="true" insertBeforeMso="GroupSaveRecording" >
-				  <button id="my" label="Convert Presentation" enabled="true"
+				  <button id="my" label="Преобразовать презентацию в Видео" enabled="true"
 								  onAction="ConvertPresentationToVideo" getImage="Image"
 								  size="large" />
 			  </group>

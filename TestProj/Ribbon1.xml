@@ -15,7 +15,7 @@
 			  <group id="myGroup2" label="Video Description"
 						   visible="true" insertBeforeMso="GroupSaveRecording" >
 				  <button id="myGetExportSubTitlesFromAudioFile" label="Перевести голос в комментарии" enabled="true"
-								  onAction="OnButtonClickExportSubTitlesFromVideoFile" getImage="Image"
+								  onAction="OnButtonClickExportSubTitlesFromVideoFile" getImage="GetVideoportalImage"
 								  size="large" />
 			  </group>
 		  </tab>	
@@ -23,7 +23,7 @@
 			  <group id="myGroup3" label="Video Description"
 						   visible="true" insertBeforeMso="GroupSaveRecording" >
 				  <button id="my" label="Преобразовать презентацию в Видео" enabled="true"
-								  onAction="ConvertPresentationToVideo" getImage="Image"
+								  onAction="ConvertPresentationToVideo" getImage="GetVideoportalImage"
 								  size="large" />
 			  </group>
 		  </tab>

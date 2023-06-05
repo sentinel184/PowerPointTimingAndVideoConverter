@@ -198,10 +198,10 @@ namespace TestProj
             }
             return null;
         }
-        //public Bitmap GetVideoportalImage(Office.IRibbonControl control)
-        //{
-        //    return Properties.Resources.Videoportal_Icon_large;
-        //}
+        public Bitmap GetVideoportalImage(Office.IRibbonControl control)
+        {
+            return Properties.Resources.Videoportal_Icon_large;
+        }
 
         #endregion
     }

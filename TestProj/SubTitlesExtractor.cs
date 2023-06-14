@@ -16,9 +16,29 @@ namespace TestProj
 {
     internal class SubTitlesExtractor
     {
-        public static void ExtractAudio(string inputFilePath, string outputFilePath)
+        public static void ConvertInternal(string inputStereoFile, string outputMonoFile, string args)
         {
 
+            using (var ffmpegProcess = new Process())
+            {
+                ffmpegProcess.StartInfo.UseShellExecute = false;
+                ffmpegProcess.StartInfo.RedirectStandardInput = true;
+                ffmpegProcess.StartInfo.RedirectStandardOutput = true;
+                ffmpegProcess.StartInfo.RedirectStandardError = true;
+                ffmpegProcess.StartInfo.CreateNoWindow = true;
+                ffmpegProcess.StartInfo.FileName = "E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\ffmpeg.exe";
+                ffmpegProcess.StartInfo.Arguments = $" -i {inputStereoFile} {args} {outputMonoFile}";
+                ffmpegProcess.Start();
+                ffmpegProcess.StandardOutput.ReadToEnd();
+                ffmpegProcess.WaitForExit();
+                if (!ffmpegProcess.HasExited)
+                {
+                    ffmpegProcess.Kill();
+                }
+            }
+        }
+        public static void ExtractAudio(string inputFilePath, string outputFilePath)
+        {
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = "E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\ffmpeg.exe";
             startInfo.Arguments = $"-i \"{inputFilePath}\" -vn -acodec copy \"{outputFilePath}\"";
@@ -35,98 +55,28 @@ namespace TestProj
         }
         public static void ConverDiscridisationTo16K(string inputStereoFile, string outputMonoFile)
         {
-            var mp3out = "";
-            var ffmpegProcess = new Process();
-            ffmpegProcess.StartInfo.UseShellExecute = false;
-            ffmpegProcess.StartInfo.RedirectStandardInput = true;
-            ffmpegProcess.StartInfo.RedirectStandardOutput = true;
-            ffmpegProcess.StartInfo.RedirectStandardError = true;
-            Console.WriteLine("Convert started11");
-            ffmpegProcess.StartInfo.CreateNoWindow = true;
-            ffmpegProcess.StartInfo.FileName = "E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\ffmpeg.exe";
-            Console.WriteLine("Convert started2");
-            ffmpegProcess.StartInfo.Arguments = " -i " + inputStereoFile + " -ar 16000 " + outputMonoFile;
+            ConvertInternal(inputStereoFile, outputMonoFile, "-ar 16000");
 
-            ffmpegProcess.Start();
-            ffmpegProcess.StandardOutput.ReadToEnd();
-            mp3out = ffmpegProcess.StandardError.ReadToEnd();
-            Console.WriteLine("Convert started222");
-            ffmpegProcess.WaitForExit();
-            if (!ffmpegProcess.HasExited)
-            {
-                Console.WriteLine("Convert in the if");
-                ffmpegProcess.Kill();
-            }
-            Console.WriteLine(mp3out);
-            Console.WriteLine("Convert ended");
         }
         public static void ConverStereoToMono(string inputStereoFile, string outputMonoFile)
         {
-            var mp3out = "";
-            var ffmpegProcess = new Process();
-            ffmpegProcess.StartInfo.UseShellExecute = false;
-            ffmpegProcess.StartInfo.RedirectStandardInput = true;
-            ffmpegProcess.StartInfo.RedirectStandardOutput = true;
-            ffmpegProcess.StartInfo.RedirectStandardError = true;
-            Console.WriteLine("Convert started11");
-            ffmpegProcess.StartInfo.CreateNoWindow = true;
-            ffmpegProcess.StartInfo.FileName = "E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\ffmpeg.exe";
-            Console.WriteLine("Convert started2");
-            ffmpegProcess.StartInfo.Arguments = " -i " + inputStereoFile + " -ac 1 " + outputMonoFile;
-
-            ffmpegProcess.Start();
-            ffmpegProcess.StandardOutput.ReadToEnd();
-            mp3out = ffmpegProcess.StandardError.ReadToEnd();
-            Console.WriteLine("Convert started222");
-            ffmpegProcess.WaitForExit();
-            if (!ffmpegProcess.HasExited)
-            {
-                Console.WriteLine("Convert in the if");
-                ffmpegProcess.Kill();
-            }
-            Console.WriteLine(mp3out);
-            Console.WriteLine("Convert ended");
+            ConvertInternal(inputStereoFile, outputMonoFile, "-ac 1");
         }
 
         public static void ConverMp4toMp3(string inputFile, string outputFile)
         {
-            var mp3out = "";
-            var ffmpegProcess = new Process();
-            ffmpegProcess.StartInfo.UseShellExecute = false;
-            ffmpegProcess.StartInfo.RedirectStandardInput = true;
-            ffmpegProcess.StartInfo.RedirectStandardOutput = true;
-            ffmpegProcess.StartInfo.RedirectStandardError = true;
-            Console.WriteLine("Convert started11");
-            ffmpegProcess.StartInfo.CreateNoWindow = true;
-            ffmpegProcess.StartInfo.FileName = "E:\\Visual_studio_files_and_Visual_trash\\SecondVooosk\\SecondVooosk\\ffmpeg.exe";
-            Console.WriteLine("Convert started2");
-            ffmpegProcess.StartInfo.Arguments = " -i " + inputFile + " -vn -f mp3 -ab 320k " + outputFile;
-
-            Console.WriteLine("Convert started");
-            ffmpegProcess.Start();
-            ffmpegProcess.StandardOutput.ReadToEnd();
-            mp3out = ffmpegProcess.StandardError.ReadToEnd();
-            Console.WriteLine("Convert started222");
-            ffmpegProcess.WaitForExit();
-            if (!ffmpegProcess.HasExited)
-            {
-                Console.WriteLine("Convert in the if");
-                ffmpegProcess.Kill();
-            }
-            Console.WriteLine(mp3out);
-            Console.WriteLine("Convert ended");
+            ConvertInternal(inputFile, outputFile, "-vn -f mp3 -ab 320k");
         }
         public static void ConvertToWav(string inputMp3, string outputWav)
         {
             using (Mp3FileReader mp3 = new Mp3FileReader(inputMp3))
+            using (WaveStream pcm = WaveFormatConversionStream.CreatePcmStream(mp3))
             {
-                using (WaveStream pcm = WaveFormatConversionStream.CreatePcmStream(mp3))
-                {
-                    WaveFileWriter.CreateWaveFile(outputWav, pcm);
-                }
+                WaveFileWriter.CreateWaveFile(outputWav, pcm);
             }
+
         }
-        
+
         public static List<string> ExportSubTitlesFromAudioFile(Model model, string audioPath)
         {
             VoskRecognizer rec = new VoskRecognizer(model, 16000);
@@ -143,7 +93,7 @@ namespace TestProj
                 {
                     if (rec.AcceptWaveform(buffer, bytesRead))
                     {
-                        string text = rec.Result();//Sentense
+                        string text = rec.Result();
                         int index = text.IndexOf("text") + 7;
                         string cutingText = "";
                         for (int i = index; i < text.Length - 2; i++)
@@ -189,6 +139,6 @@ namespace TestProj
 
 
 
-        
+
     }
 }

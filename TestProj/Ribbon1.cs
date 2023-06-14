@@ -12,6 +12,7 @@ using Microsoft.Office.Interop.PowerPoint;
 using TestProj;
 using Vosk;
 using Application = Microsoft.Office.Interop.PowerPoint.Application;
+using System.Drawing;
 
 namespace TestProj
 {
@@ -86,6 +87,7 @@ namespace TestProj
         }
         public void OnCustomButtonClick(Office.IRibbonControl control)
         {
+            string[] items = {"","","","","","","","","","",""};
             var myForm = new Form();
             //TODO
             try
@@ -108,28 +110,60 @@ namespace TestProj
                    
 
                    // file.WriteLine($"Slide {i}: {slideDuration} seconds");
-                    durationForForm.Add( $" Slide {i}: {slideDuration.ToString()} seconds" );
+                    //durationForForm.Add( $" Slide {i}: {slideDuration.ToString()} seconds" );
+
 
 
                     // If this is not the last slide, subtract the slide duration from the total duration.
 
                         totalDuration += slideDuration;
+                    int res = Convert.ToInt16(totalDuration - slideDuration);
+                    if (res<10)
+                    {
+                        items[i]=Convert.ToString( $"Slide{i} 00:0"+Convert.ToInt16(totalDuration - slideDuration)+"\n");
+
+                    }
+                    else
+                    {
+                        items[i] = Convert.ToString($"Slide{i} 00:" + Convert.ToInt16(totalDuration - slideDuration) + "\n");
+                    }
+
                     
+                    
+
                 }
 
                 // Add the total duration to the end of the file.
                // file.WriteLine($"Total duration: {totalDuration} seconds");
-                durationForForm.Add($" Total duration: {totalDuration.ToString()} seconds");
+                //durationForForm.Add($" Total duration: {totalDuration.ToString()} seconds");
                 ListBox listBox = new ListBox();
-                listBox.DataSource = durationForForm;
-                myForm.Controls.Add(listBox);
-                myForm.ShowDialog();
+
+                listBox.Items.AddRange(items);
+                listBox.SelectionMode = SelectionMode.MultiExtended;
+                listBox.Dock = DockStyle.Fill;
+                Form form = new Form();
+                form.Text = "Список Таймингов";
+                form.Controls.Add(listBox);
+                Button button = new Button();
+                button.Text = "Скопировать";
+                button.Dock = DockStyle.Bottom;
+                button.Click += (sender, e) => {
+                    string selectedItems = "";
+                    foreach (object item in listBox.SelectedItems)
+                    {
+                        selectedItems += item.ToString() + "\n";
+                    }
+                    Clipboard.SetText(selectedItems);
+                };
+                form.Controls.Add(button);
+                form.ShowDialog();
+            
 
                 // Close the file.
-               // file.Close();
+                // file.Close();
 
-                // Show a message box to indicate that the slide times have been recorded.
-               // MessageBox.Show("Slide times have been recorded and saved to " + filePath);
+            // Show a message box to indicate that the slide times have been recorded.
+            // MessageBox.Show("Slide times have been recorded and saved to " + filePath);
             }
             catch (Exception ex)
             {
@@ -163,6 +197,10 @@ namespace TestProj
                 }
             }
             return null;
+        }
+        public Bitmap GetVideoportalImage(Office.IRibbonControl control)
+        {
+            return Properties.Resources.Videoportal_Icon_large;
         }
 
         #endregion
